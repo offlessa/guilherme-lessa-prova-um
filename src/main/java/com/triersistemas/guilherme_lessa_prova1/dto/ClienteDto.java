@@ -12,15 +12,10 @@ public class ClienteDto {
 	private Long id;
 	private String nome;
 	private String email;
-	private Long reservaId;
-
+	
 	public ClienteDto(ClienteEntity entity) {
-		this.id = entity.getId();
-		this.nome = entity.getNome();
-		this.email = entity.getEmail();
-		if (entity.getReserva() != null) {
-			this.reservaId = entity.getReserva().getId();
-		}
+		id = entity.getId();
+		nome = entity.getNome();
+		email = entity.getEmail();
 	}
-
 }

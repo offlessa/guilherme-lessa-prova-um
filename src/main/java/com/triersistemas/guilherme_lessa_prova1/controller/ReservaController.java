@@ -1,9 +1,13 @@
 package com.triersistemas.guilherme_lessa_prova1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.triersistemas.guilherme_lessa_prova1.entity.Reserva;
+import com.triersistemas.guilherme_lessa_prova1.dto.ReservaDto;
+import com.triersistemas.guilherme_lessa_prova1.entity.ReservaEntity;
+import com.triersistemas.guilherme_lessa_prova1.enums.StatusEnum;
 import com.triersistemas.guilherme_lessa_prova1.service.ReservaService;
 
 import java.time.LocalDate;
@@ -13,26 +17,32 @@ import java.util.List;
 @RequestMapping("/reservas")
 public class ReservaController {
 
-    @Autowired
-    private ReservaService reservaService;
+	@Autowired
+	private ReservaService reservaService;
 
-    @PostMapping("/{clienteId}")
-    public Reserva criarReserva(@PathVariable Long clienteId, @RequestBody Reserva reserva) {
-        return reservaService.criarReserva(clienteId, reserva);
-    }
+	@PostMapping
+	public ResponseEntity<ReservaEntity> criarReserva(@RequestBody ReservaDto reservaDto) {
+		ReservaEntity reserva = reservaService.criarReserva(reservaDto);
+		return new ResponseEntity<>(reserva, HttpStatus.CREATED);
+	}
 
-    @GetMapping("/cliente/{clienteId}")
-    public List<Reserva> listarReservasPorCliente(@PathVariable Long clienteId) {
-        return reservaService.listarReservasPorCliente(clienteId);
-    }
+	@GetMapping("/cliente/{clienteId}")
+	public ResponseEntity<List<ReservaEntity>> listarReservasPorCliente(@PathVariable Long clienteId) {
+		List<ReservaEntity> reservas = reservaService.listarReservasPorCliente(clienteId);
+		return ResponseEntity.ok(reservas);
+	}
 
-    @GetMapping("/verificar")
-    public boolean verificarDisponibilidade(@RequestParam LocalDate dataReserva, @RequestParam Integer numeroMesa) {
-        return reservaService.verificarDisponibilidadeMesa(dataReserva, numeroMesa);
-    }
+	@GetMapping("/verificarDisponibilidade")
+	public ResponseEntity<Boolean> verificarDisponibilidadeMesa(@RequestParam LocalDate dataReserva,
+			@RequestParam Integer numeroMesa) {
+		boolean disponivel = reservaService.verificarDisponibilidadeMesa(dataReserva, numeroMesa);
+		return ResponseEntity.ok(disponivel);
+	}
 
-    @PutMapping("/{reservaId}/status")
-    public Reserva alterarStatusReserva(@PathVariable Long reservaId, @RequestParam Reserva.Status status) {
-        return reservaService.alterarStatusReserva(reservaId, status);
-    }
+	@PutMapping("/{reservaId}/status")
+	public ResponseEntity<ReservaEntity> alterarStatusReserva(@PathVariable Long reservaId,
+			@RequestParam StatusEnum status) {
+		ReservaEntity reserva = reservaService.alterarStatusReserva(reservaId, status);
+		return ResponseEntity.ok(reserva);
+	}
 }

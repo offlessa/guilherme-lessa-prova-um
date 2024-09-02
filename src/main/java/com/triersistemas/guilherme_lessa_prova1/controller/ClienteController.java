@@ -1,15 +1,11 @@
 package com.triersistemas.guilherme_lessa_prova1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.triersistemas.guilherme_lessa_prova1.entity.ClienteEntity.Cliente;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.triersistemas.guilherme_lessa_prova1.dto.ClienteDto;
+import com.triersistemas.guilherme_lessa_prova1.entity.ClienteEntity;
 import com.triersistemas.guilherme_lessa_prova1.service.ClienteService;
 
 @RestController
@@ -20,12 +16,14 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	@PostMapping
-	public Cliente criarCliente(@RequestBody Cliente cliente) {
-		return clienteService.criarCliente(cliente);
+	public ResponseEntity<ClienteEntity> criarCliente(@RequestBody ClienteDto clienteDto) {
+		ClienteEntity cliente = clienteService.criarCliente(clienteDto);
+		return new ResponseEntity<>(cliente, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public Cliente alterarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-		return clienteService.alterarCliente(id, cliente);
+	public ResponseEntity<ClienteEntity> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDto clienteDto) {
+		ClienteEntity cliente = clienteService.atualizarCliente(id, clienteDto);
+		return ResponseEntity.ok(cliente);
 	}
 }
