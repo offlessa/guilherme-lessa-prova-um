@@ -38,6 +38,6 @@ public class ReservaServiceImpl implements ReservaService {
 
 	@Override
 	public List<ReservaDto> buscarReservasPorData(LocalDate data) {
-		// Implement find by date logic
+		// falta implementar a lógica
 	}
 }
