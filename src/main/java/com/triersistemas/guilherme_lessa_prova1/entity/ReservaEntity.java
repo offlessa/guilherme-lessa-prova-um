@@ -13,37 +13,32 @@ import com.triersistemas.guilherme_lessa_prova1.enums.StatusReservaEnum;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "reserva")
+@Entity
 public class ReservaEntity {
-
-    public enum Status {
-        FEITA, CONCLUIDA, CANCELADA
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(nullable = false)
-    private LocalDate dataReserva;
-
-    @Column(nullable = false)
-    private Integer numeroPessoas;
-
-    @Column(nullable = false)
-    private Integer numeroMesa;
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false)
-    private Status status = Status.FEITA;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private ClienteEntity cliente;
 
-	public void setStatus(StatusReservaEnum status2) {
-		
-	}
+    @ManyToOne
+    @JoinColumn(name = "mesa_id", nullable = false)
+    private MesaEntity mesa;
+
+    @Column(name = "data_reserva", nullable = false)
+    private LocalDate dataReserva;
+
+    @Column(name = "quantidade_pessoas", nullable = false)
+    private int quantidadePessoas;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatusReservaEnum status;
+
+    private String observacao;
+
 }
 
 

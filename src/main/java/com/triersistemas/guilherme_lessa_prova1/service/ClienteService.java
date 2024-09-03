@@ -1,15 +1,13 @@
 package com.triersistemas.guilherme_lessa_prova1.service;
 
+import java.util.List;
+
 import com.triersistemas.guilherme_lessa_prova1.dto.ClienteDto;
 
-import com.triersistemas.guilherme_lessa_prova1.entity.ClienteEntity;
-
-import java.util.Optional;
-
 public interface ClienteService {
-	ClienteEntity criarCliente(ClienteDto clienteDto);
-
-	ClienteEntity atualizarCliente(Long id, ClienteDto clienteDto);
-
-	Optional<ClienteEntity> encontrarClientePorEmail(String email);
+    ClienteDto criarCliente(ClienteDto clienteDto);
+    ClienteDto atualizarCliente(Long id, ClienteDto clienteDto);
+    ClienteDto buscarCliente(Long id);
+    void deletarCliente(Long id);
+    List<ClienteDto> listarClientes();
 }

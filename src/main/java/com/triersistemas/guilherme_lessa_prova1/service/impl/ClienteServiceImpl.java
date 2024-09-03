@@ -1,40 +1,46 @@
 package com.triersistemas.guilherme_lessa_prova1.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.triersistemas.guilherme_lessa_prova1.dto.ClienteDto;
+import java.util.List;
 
-import com.triersistemas.guilherme_lessa_prova1.entity.ClienteEntity;
+import org.springframework.stereotype.Service;
+
+import com.triersistemas.guilherme_lessa_prova1.dto.ClienteDto;
 import com.triersistemas.guilherme_lessa_prova1.repository.ClienteRepository;
 import com.triersistemas.guilherme_lessa_prova1.service.ClienteService;
 
-import java.util.Optional;
-
 @Service
 public class ClienteServiceImpl implements ClienteService {
+	
+	 // injetar repositório
+	
+    private final ClienteRepository clienteRepository;
 
-	@Autowired
-	private ClienteRepository clienteRepository;
+    public ClienteServiceImpl(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 
-	@Override
-	public ClienteEntity criarCliente(ClienteDto clienteDto) {
-		ClienteEntity cliente = new ClienteEntity();
-		cliente.setNome(clienteDto.getNome());
-		cliente.setEmail(clienteDto.getEmail());
-		return clienteRepository.save(cliente);
-	}
+    @Override
+    public ClienteDto criarCliente(ClienteDto clienteDto) {
+    	 // falta implementar a lógica
+    }
 
-	@Override
-	public ClienteEntity atualizarCliente(Long id, ClienteDto clienteDto) {
-		ClienteEntity cliente = clienteRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-		cliente.setNome(clienteDto.getNome());
-		cliente.setEmail(clienteDto.getEmail());
-		return clienteRepository.save(cliente);
-	}
+    @Override
+    public ClienteDto atualizarCliente(Long id, ClienteDto clienteDto) {
+    	 // falta implementar a lógica
+    }
 
-	@Override
-	public Optional<ClienteEntity> encontrarClientePorEmail(String email) {
-		return clienteRepository.findByEmail(email);
-	}
+    @Override
+    public ClienteDto buscarCliente(Long id) {
+    	 // falta implementar a lógica
+    }
+
+    @Override
+    public void deletarCliente(Long id) {
+    	 // falta implementar a lógica
+    }
+
+    @Override
+    public List<ClienteDto> listarClientes() {
+    	 // falta implementar a lógica
+    }
 }

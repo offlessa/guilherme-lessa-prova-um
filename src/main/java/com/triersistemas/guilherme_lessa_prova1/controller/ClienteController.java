@@ -1,29 +1,42 @@
 package com.triersistemas.guilherme_lessa_prova1.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import com.triersistemas.guilherme_lessa_prova1.dto.ClienteDto;
-import com.triersistemas.guilherme_lessa_prova1.entity.ClienteEntity;
 import com.triersistemas.guilherme_lessa_prova1.service.ClienteService;
+
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
+    private final ClienteService clienteService;
 
-	@Autowired
-	private ClienteService clienteService;
+    public ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
 
-	@PostMapping
-	public ResponseEntity<ClienteEntity> criarCliente(@RequestBody ClienteDto clienteDto) {
-		ClienteEntity cliente = clienteService.criarCliente(clienteDto);
-		return new ResponseEntity<>(cliente, HttpStatus.CREATED);
-	}
+    @PostMapping
+    public ClienteDto criarCliente(@RequestBody ClienteDto clienteDto) {
+        return clienteService.criarCliente(clienteDto);
+    }
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ClienteEntity> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDto clienteDto) {
-		ClienteEntity cliente = clienteService.atualizarCliente(id, clienteDto);
-		return ResponseEntity.ok(cliente);
-	}
+    @PutMapping("/{id}")
+    public ClienteDto atualizarCliente(@PathVariable Long id, @RequestBody ClienteDto clienteDto) {
+        return clienteService.atualizarCliente(id, clienteDto);
+    }
+
+    @GetMapping("/{id}")
+    public ClienteDto buscarCliente(@PathVariable Long id) {
+        return clienteService.buscarCliente(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletarCliente(@PathVariable Long id) {
+        clienteService.deletarCliente(id);
+    }
+
+    @GetMapping
+    public List<ClienteDto> listarClientes() {
+        return clienteService.listarClientes();
+    }
 }

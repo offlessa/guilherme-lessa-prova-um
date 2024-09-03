@@ -1,48 +1,42 @@
 package com.triersistemas.guilherme_lessa_prova1.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.triersistemas.guilherme_lessa_prova1.dto.ReservaDto;
-import com.triersistemas.guilherme_lessa_prova1.entity.ReservaEntity;
-import com.triersistemas.guilherme_lessa_prova1.enums.StatusReservaEnum;
 import com.triersistemas.guilherme_lessa_prova1.service.ReservaService;
-
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/reservas")
 public class ReservaController {
+    private final ReservaService reservaService;
 
-	@Autowired
-	private ReservaService reservaService;
+    public ReservaController(ReservaService reservaService) {
+        this.reservaService = reservaService;
+    }
 
-	@PostMapping
-	public ResponseEntity<ReservaEntity> criarReserva(@RequestBody ReservaDto reservaDto) {
-		ReservaEntity reserva = reservaService.criarReserva(reservaDto);
-		return new ResponseEntity<>(reserva, HttpStatus.CREATED);
-	}
+    @PostMapping
+    public ReservaDto criarReserva(@RequestBody ReservaDto reservaDto) {
+        return reservaService.criarReserva(reservaDto);
+    }
 
-	@GetMapping("/cliente/{clienteId}")
-	public ResponseEntity<List<ReservaEntity>> listarReservasPorCliente(@PathVariable Long clienteId) {
-		List<ReservaEntity> reservas = reservaService.listarReservasPorCliente(clienteId);
-		return ResponseEntity.ok(reservas);
-	}
+    @PutMapping("/{id}")
+    public ReservaDto atualizarReserva(@PathVariable Long id, @RequestBody ReservaDto reservaDto) {
+        return reservaService.atualizarReserva(id, reservaDto);
+    }
 
-	@GetMapping("/verificarDisponibilidade")
-	public ResponseEntity<Boolean> verificarDisponibilidadeMesa(@RequestParam LocalDate dataReserva,
-			@RequestParam Integer numeroMesa) {
-		boolean disponivel = reservaService.verificarDisponibilidadeMesa(dataReserva, numeroMesa);
-		return ResponseEntity.ok(disponivel);
-	}
+    @GetMapping("/{id}")
+    public ReservaDto buscarReserva(@PathVariable Long id) {
+        return reservaService.buscarReserva(id);
+    }
 
-	@PutMapping("/{reservaId}/status")
-	public ResponseEntity<ReservaEntity> alterarStatusReserva(@PathVariable Long reservaId,
-			@RequestParam StatusReservaEnum status) {
-		ReservaEntity reserva = reservaService.alterarStatusReserva(reservaId, status);
-		return ResponseEntity.ok(reserva);
-	}
+    @DeleteMapping("/{id}")
+    public void cancelarReserva(@PathVariable Long id) {
+        reservaService.cancelarReserva(id);
+    }
+
+    @GetMapping("/data")
+    public List<ReservaDto> buscarReservasPorData(@RequestParam LocalDate data) {
+        return reservaService.buscarReservasPorData(data);
+    }
 }
