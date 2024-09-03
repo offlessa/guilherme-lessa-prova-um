@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.triersistemas.guilherme_lessa_prova1.dto.ReservaDto;
 import com.triersistemas.guilherme_lessa_prova1.entity.ClienteEntity;
 import com.triersistemas.guilherme_lessa_prova1.entity.ReservaEntity;
-import com.triersistemas.guilherme_lessa_prova1.enums.StatusEnum;
+import com.triersistemas.guilherme_lessa_prova1.enums.StatusReservaEnum;
 import com.triersistemas.guilherme_lessa_prova1.repository.ClienteRepository;
 import com.triersistemas.guilherme_lessa_prova1.repository.ReservaRepository;
 import com.triersistemas.guilherme_lessa_prova1.service.ReservaService;
@@ -59,15 +59,15 @@ public class ReservaServiceImpl implements ReservaService {
 	}
 
 	@Override
-	public ReservaEntity alterarStatusReserva(Long reservaId, StatusEnum status) {
+	public ReservaEntity alterarStatusReserva(Long reservaId, StatusReservaEnum status) {
 		ReservaEntity reserva = reservaRepository.findById(reservaId)
 				.orElseThrow(() -> new RuntimeException("Reserva não encontrada"));
 
-		if (status == StatusEnum.CONCLUIDA && reserva.getDataReserva().isBefore(LocalDate.now())) {
+		if (status == StatusReservaEnum.CONCLUIDA && reserva.getDataReserva().isBefore(LocalDate.now())) {
 			throw new RuntimeException("A reserva só pode ser concluída se a data for hoje ou no futuro");
 		}
 
-		if (status == StatusEnum.CANCELADA && reserva.getDataReserva().isBefore(LocalDate.now().plusDays(1))) {
+		if (status == StatusReservaEnum.CANCELADA && reserva.getDataReserva().isBefore(LocalDate.now().plusDays(1))) {
 			throw new RuntimeException("A reserva só pode ser cancelada com um dia de antecedência");
 		}
 

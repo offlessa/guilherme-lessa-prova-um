@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.triersistemas.guilherme_lessa_prova1.dto.ReservaDto;
 import com.triersistemas.guilherme_lessa_prova1.entity.ReservaEntity;
-import com.triersistemas.guilherme_lessa_prova1.enums.StatusEnum;
+import com.triersistemas.guilherme_lessa_prova1.enums.StatusReservaEnum;
 import com.triersistemas.guilherme_lessa_prova1.service.ReservaService;
 
 import java.time.LocalDate;
@@ -41,7 +41,7 @@ public class ReservaController {
 
 	@PutMapping("/{reservaId}/status")
 	public ResponseEntity<ReservaEntity> alterarStatusReserva(@PathVariable Long reservaId,
-			@RequestParam StatusEnum status) {
+			@RequestParam StatusReservaEnum status) {
 		ReservaEntity reserva = reservaService.alterarStatusReserva(reservaId, status);
 		return ResponseEntity.ok(reserva);
 	}

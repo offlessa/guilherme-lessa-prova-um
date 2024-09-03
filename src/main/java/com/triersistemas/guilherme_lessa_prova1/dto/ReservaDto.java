@@ -1,7 +1,7 @@
 package com.triersistemas.guilherme_lessa_prova1.dto;
 
 import com.triersistemas.guilherme_lessa_prova1.entity.ReservaEntity;
-import com.triersistemas.guilherme_lessa_prova1.enums.StatusEnum;
+import com.triersistemas.guilherme_lessa_prova1.enums.StatusReservaEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ public class ReservaDto {
     private LocalDate dataReserva;
     private Integer numeroPessoas;
     private Integer numeroMesa;
-    private StatusEnum status;
+    private StatusReservaEnum status;
     private ClienteDto cliente;
     private String nomeCliente;
     private Long idCliente;
@@ -25,7 +25,7 @@ public class ReservaDto {
         dataReserva = entity.getDataReserva();
         numeroPessoas = entity.getNumeroPessoas();
         numeroMesa = entity.getNumeroMesa();
-        status = StatusEnum.valueOf(entity.getStatus().name());
+        status = StatusReservaEnum.valueOf(entity.getStatus().name());
         cliente = new ClienteDto(entity.getCliente());
     }
 

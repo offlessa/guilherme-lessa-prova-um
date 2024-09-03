@@ -2,7 +2,7 @@ package com.triersistemas.guilherme_lessa_prova1.service;
 
 import com.triersistemas.guilherme_lessa_prova1.dto.ReservaDto;
 import com.triersistemas.guilherme_lessa_prova1.entity.ReservaEntity;
-import com.triersistemas.guilherme_lessa_prova1.enums.StatusEnum;
+import com.triersistemas.guilherme_lessa_prova1.enums.StatusReservaEnum;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface ReservaService {
     List<ReservaEntity> listarReservasPorCliente(Long clienteId);
     boolean verificarDisponibilidadeMesa(LocalDate dataReserva, Integer numeroMesa);
 
-	ReservaEntity alterarStatusReserva(Long reservaId, StatusEnum status);
+	ReservaEntity alterarStatusReserva(Long reservaId, StatusReservaEnum status);
 }

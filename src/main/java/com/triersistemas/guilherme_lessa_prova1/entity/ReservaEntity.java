@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
 
-import com.triersistemas.guilherme_lessa_prova1.enums.StatusEnum;
+import com.triersistemas.guilherme_lessa_prova1.enums.StatusReservaEnum;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,7 +41,7 @@ public class ReservaEntity {
     @JoinColumn(name = "cliente_id", nullable = false)
     private ClienteEntity cliente;
 
-	public void setStatus(StatusEnum status2) {
+	public void setStatus(StatusReservaEnum status2) {
 		
 	}
 }
